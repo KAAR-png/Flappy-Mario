@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Flappy Mario - KAAR Games</title>
+<style>
+body{margin:0;background:#70c5ce;text-align:center;font-family:Arial;color:white}
+canvas{background:#70c5ce;display:block;margin:10px auto;border:2px solid white;border-radius:10px}
+.btn{background:#ff4141;color:white;padding:12px 25px;border-radius:25px;text-decoration:none;font-weight:bold;display:inline-block;margin:10px}
+</style>
+</head>
+<body>
+<h2>Flappy Mario by KAAR</h2>
+<canvas id="c" width="320" height="480"></canvas>
+<p id="score">Score: 0</p>
+<a class="btn" href="#">Get Full Version - $1</a>
+<script>
+let canvas=document.getElementById("c"),ctx=canvas.getContext("2d");
+let birdY=200,vel=0,g=0.5,score=0;
+let pipes=[],frame=0;
+function draw(){
+ctx.clearRect(0,0,320,480);
+ctx.fillStyle="yellow";ctx.fillRect(50,birdY,20,20);
+ctx.fillStyle="green";
+for(let p of pipes){ctx.fillRect(p.x,0,40,p.top);ctx.fillRect(p.x,p.top+100,40,480);p.x-=2;if(p.x==48)score++;if(50+20>p.x&&50<p.x+40&&(birdY<p.top||birdY+20>p.top+100)){birdY=200;vel=0;pipes=[];score=0;}}
+if(frame%90==0)pipes.push({x:320,top:Math.random()*200+20});
+birdY+=vel;vel+=g;if(birdY>460||birdY<0){birdY=200;vel=0;pipes=[];score=0;}
+document.getElementById("score").innerText="Score: "+score;
+frame++;requestAnimationFrame(draw);
+}
+canvas.onclick=()=>vel=-8;draw();
+</script>
+</body>
+                        </html>
